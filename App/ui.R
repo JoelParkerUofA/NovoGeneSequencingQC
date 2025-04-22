@@ -12,5 +12,6 @@ ui <- page_navbar(
   title = "Sequencing QC",
   ui_about,
   ui_dashboard,
-  theme = bs_theme(version = 5, bootswatch = "superhero")
+  theme = bs_theme(version = 5, bootswatch = "superhero",
+                   secondary = "#df6919")
 )

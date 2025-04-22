@@ -4,11 +4,16 @@
 
 ui_dashboard <- nav_panel(
   title = "Dashboard",
-  fluidRow(
-    column(3, fileInput("metadata", "Load Metadata")),
-    column(3, fileInput("qc", "Load QC Data")),
-    column(3, selectInput("mergeVar", "Select Linking Variable",
-                          choices = NULL))
+
+
+  card(
+    card_header("Data Loading"),
+    fluidRow(
+      column(3, fileInput("metadata", "Load Metadata")),
+      column(3, fileInput("qc", "Load QC Data")),
+      column(3, selectInput("mergeVar", "Select Linking Variable",
+                            choices = NULL))
+    ), fill = FALSE
   ),
   h1("Sample Accounting"),
   'Checking the number of samples (rows)
@@ -30,21 +35,20 @@ ui_dashboard <- nav_panel(
     "Select variables to generate dashboard",
     fluidRow(
       column(3, selectInput("raw", "Select Raw Reads Variable",
-                            choices = NULL)),
+                            choices = "Raw reads")),
       column(3, selectInput("plate", "Select Plate Variable",
-                            choices = NULL)),
+                            choices = "Plate")),
       column(3, selectInput("region", "Select Region Variable",
-                            choices = NULL)),
+                            choices = "Region")),
       column(3, selectInput("aoi", "Select AOI",
-                            choices = NULL)),
+                            choices = "AOI")),
       column(3, selectInput("gc", "Select GC% Variable",
-                            choices = NULL)),
+                            choices = "GC%")),
       column(3, selectInput("nuclei", "Select Nuclei Variable",
-                            choices = NULL)),
+                            choices = "Nuclei")),
       column(3, selectInput("area", "Select Tissue Area Variable",
-                            choices = NULL)),
-      column(3, actionButton("createReport", "Generate Report",
-                             class = "btn-primary btn-lg"))
+                            choices = "area")),
+      column(3, actionButton("createReport", "Generate Report"))
 
     ), fill = FALSE
   ),

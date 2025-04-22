@@ -6,6 +6,7 @@ library(bslib)
 library(plotly)
 
 server <- function(input, output,session) {
+
   # Meta data
   metadata <- reactive({
     req(input$metadata)
@@ -106,13 +107,19 @@ server <- function(input, output,session) {
       form <- as.formula(paste0(input$aoi, "~", input$region))
       # Plot
       plt <- ggplot(combined(),
-                    aes(x = !!sym(input$plate), y = log10(!!sym(input$raw)))) +
+                    aes(x = !!sym(input$plate), y = log10(!!sym(input$raw)),
+                        text = paste0("Sample ID: ", !!sym(input$mergeVar), "\n", # nolint: line_length_linter.
+                                      "Raw: ", !!sym(input$raw), "\n",
+                                      "Plate: ", !!sym(input$plate), "\n",
+                                      "AOI: ", !!sym(input$aoi), "\n",
+                                      "Region: ", !!sym(input$region)))) +
         facet_wrap(form) +
         geom_point() +
-        theme_bw()
+        theme_bw() +
+        theme(axis.text.x = element_text(angle = 45))
 
 
-      ggplotly(plt)
+      ggplotly(plt, tooltip = "text")
     })
   })
 
