@@ -8,23 +8,26 @@ ui_dashboard <- nav_panel(
     column(3, fileInput("metadata", "Load Metadata")),
     column(3, fileInput("qc", "Load QC Data")),
     column(3, selectInput("mergeVar", "Select Linking Variable",
-                          choices = NULL)),
-    column(3, actionButton("createReport", "Generate Report"))
+                          choices = NULL))
   ),
   h1("Sample Accounting"),
-
+  'Checking the number of samples (rows)
+   in the metadata and quality control data. The "Samples for QC" shows
+   the number of samples that were matched via the "linking" variable and
+   represents the number of samples for downstream analysis.',
   fluidRow(
     column(3, value_box(title = "Metadata Samples",
                         value = uiOutput("nMeta"), theme = "blue")),
     column(3, value_box(title = "QC Samples",
                         value = uiOutput("nQC"), theme = "blue")),
-    column(3, value_box(title = "Samples In Common",
+    column(3, value_box(title = "Samples For QC",
                         value = uiOutput("nCommon"), theme = "blue"))
   ),
 
   # Select Variables
   card(
     card_header("Select Variables"),
+    "Select variables to generate dashboard",
     fluidRow(
       column(3, selectInput("raw", "Select Raw Reads Variable",
                             choices = NULL)),
@@ -39,9 +42,11 @@ ui_dashboard <- nav_panel(
       column(3, selectInput("nuclei", "Select Nuclei Variable",
                             choices = NULL)),
       column(3, selectInput("area", "Select Tissue Area Variable",
-                            choices = NULL))
+                            choices = NULL)),
+      column(3, actionButton("createReport", "Generate Report",
+                             class = "btn-primary btn-lg"))
 
-    )
+    ), fill = FALSE
   ),
 
   h1("Sequencing QC Dashboard"),
