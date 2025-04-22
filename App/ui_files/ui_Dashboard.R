@@ -22,11 +22,9 @@ ui_dashboard <- nav_panel(
                         value = uiOutput("nCommon"), theme = "blue"))
   ),
 
-
-  h1("Sequencing QC"),
-
+  # Select Variables
   card(
-    card_header("Raw Reads By Plate"),
+    card_header("Select Variables"),
     fluidRow(
       column(3, selectInput("raw", "Select Raw Reads Variable",
                             choices = NULL)),
@@ -35,8 +33,21 @@ ui_dashboard <- nav_panel(
       column(3, selectInput("region", "Select Region Variable",
                             choices = NULL)),
       column(3, selectInput("aoi", "Select AOI",
+                            choices = NULL)),
+      column(3, selectInput("gc", "Select GC% Variable",
+                            choices = NULL)),
+      column(3, selectInput("nuclei", "Select Nuclei Variable",
+                            choices = NULL)),
+      column(3, selectInput("area", "Select Tissue Area Variable",
                             choices = NULL))
-    ),
+
+    )
+  ),
+
+  h1("Sequencing QC Dashboard"),
+
+  card(
+    card_header("Raw Reads By Plate"),
     plotlyOutput("rawPlot"),
     full_screen = TRUE,
     fill = FALSE
@@ -50,27 +61,21 @@ ui_dashboard <- nav_panel(
   ),
 
   card(
-    card_header("GC %"), 
-    selectInput("gc", "Select GC% Variable",
-                choices = NULL),
+    card_header("GC %"),
     plotlyOutput("gcPlot"),
     full_screen = TRUE,
     fill = FALSE
   ),
 
   card(
-    card_header("Nuclei"), 
-    selectInput("nuclei", "Select Nuclei Variable",
-                choices = NULL),
+    card_header("Nuclei"),
     plotlyOutput("nucleiPlot"),
     full_screen = TRUE,
     fill = FALSE
   ),
 
   card(
-    card_header("Tissue Area"), 
-    selectInput("area", "Select Tissue Area Variable",
-                choices = NULL),
+    card_header("Tissue Area"),
     plotlyOutput("areaPlot"),
     full_screen = TRUE,
     fill = FALSE

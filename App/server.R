@@ -1,4 +1,4 @@
-library(shiny)
+library(shiny) 
 library(compositions)
 library(data.table)
 library(ggplot2)
@@ -102,8 +102,8 @@ server <- function(input, output,session) {
     req(combined())
 
     output$rawPlot <- renderPlotly({
-      
-      form <- as.formula(paste0(input$aoi, "~", input$region))
+
+    form <- as.formula(paste0(input$aoi, "~", input$region)
     # Plot
       plt <- ggplot(combined(), aes(x = !!sym(input$plate), y = log10(!!sym(input$raw)))) +
         facet_wrap(form) +
