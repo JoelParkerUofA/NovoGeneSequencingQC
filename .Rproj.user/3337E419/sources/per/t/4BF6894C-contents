@@ -1,0 +1,47 @@
+library(shiny)
+library(bslib)
+library(data.table)
+library(compositions)
+
+
+
+ui <- page_sidebar(
+  title = "Sequencing QC",
+  sidebar = sidebar(
+    selectInput("region", "Region:", names(cars)),
+    selectInput("AOI", "AOI:", names(cars)),
+    selectInput("raw", "Raw Reads:", names(cars)),
+  ),
+
+  # Sample Accounting
+  fluidRow(
+    column(4, value_box(title = "Metadata", value = 1,
+                        theme = "blue")),
+    column(4, value_box(title = "QC", value = 1,
+                        theme = "green")),
+    column(4, value_box(title = "Different", value = 1,
+                        theme = "red"))
+  ),
+
+  # Plate QC
+  card(
+    card_header("Plate QC"),
+    full_screen = TRUE
+  ),
+  card(
+    card_header("Raw Reads"),
+    full_screen = TRUE
+  ),
+  card(
+    card_header("GC%"),
+    full_screen = TRUE
+  ),
+  card(
+    card_header("Nuclei"),
+    full_screen = TRUE
+  ),
+  card(
+    card_header("Tissue Area"),
+    full_screen = TRUE
+  ),
+)
