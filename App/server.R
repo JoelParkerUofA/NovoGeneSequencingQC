@@ -4,8 +4,9 @@ library(data.table)
 library(ggplot2)
 library(bslib)
 library(plotly)
+library(DT)
 
-server <- function(input, output,session) {
+server <- function(input, output, session) {
 
   # Meta data
   metadata <- reactive({
@@ -74,6 +75,16 @@ server <- function(input, output,session) {
                       choices = names(combined()))
 
 
+    ## Show data
+    output$combinedDT <- renderDT({
+      combined()
+    })
+
+    output$QCDT <- renderDT(qc())
+
+    output$metaDT <- renderDT(metadata())
+
+
   })
 
   ###############################
@@ -92,6 +103,7 @@ server <- function(input, output,session) {
   output$nCommon <- renderText({
     req(input$qc)
     req(input$metadata)
+    req(combined())
     nrow(combined())
   })
 

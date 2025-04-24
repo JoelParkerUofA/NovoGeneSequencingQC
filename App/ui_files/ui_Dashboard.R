@@ -29,6 +29,26 @@ ui_dashboard <- nav_panel(
                         value = uiOutput("nCommon"), theme = "blue"))
   ),
 
+  # Display data
+  fluidRow(
+    column(12,
+      navset_card_tab(
+        nav_panel(
+          title = "Metadata",
+          dataTableOutput("metaDT")
+        ),
+        nav_panel(
+          title = "QC Data",
+          dataTableOutput("QCDT")
+        ),
+        nav_panel(
+          title = "Combined",
+          dataTableOutput("combinedDT")
+        )
+      )
+    )
+  ),
+
   # Select Variables
   card(
     card_header("Select Variables"),
@@ -59,12 +79,23 @@ ui_dashboard <- nav_panel(
 
   h1("Sequencing QC Dashboard"),
 
-  card(
-    card_header("Raw Reads By Plate"),
-    plotlyOutput("rawPlot"),
-    full_screen = TRUE,
-    fill = FALSE
+  fluidRow(
+    column(12,
+      navset_card_tab(
+        tabPanel(
+          title = "Raw",
+          plotlyOutput("rawPlot")
+        )
+      )
+    )
   ),
+
+#  card(
+#    card_header("Raw Reads By Plate"),
+#    plotlyOutput("rawPlot"),
+#    full_screen = TRUE,
+#    fill = FALSE
+#  ),
 
   card(
     card_header("Centered Log Ratio By Plate"),
