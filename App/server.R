@@ -102,6 +102,7 @@ server <- function(input, output,session) {
   observeEvent(input$createReport, {
     req(combined())
 
+    # Raw Plot
     output$rawPlot <- renderPlotly({
 
       form <- as.formula(paste0(input$aoi, "~", input$region))
@@ -121,6 +122,99 @@ server <- function(input, output,session) {
 
       ggplotly(plt, tooltip = "text")
     })
+
+    # GC Plot
+    output$gcPlot <- renderPlotly({
+
+      form <- as.formula(paste0("~", input$aoi))
+      plt <- ggplot(data = combined(),
+                    aes(x = !!sym(input$region),
+                        y = !!sym(input$gc),
+                        colour = !!sym(input$plate),
+                        text = paste0("Sample ID: ", !!sym(input$mergeVar), "\n", # nolint: line_length_linter.
+                                      "Raw: ", !!sym(input$raw), "\n",
+                                      "Plate: ", !!sym(input$plate), "\n",
+                                      "AOI: ", !!sym(input$aoi), "\n",
+                                      "Region: ", !!sym(input$region)))) +
+        geom_point() +
+        #geom_line() +
+        facet_wrap(form, scales = "free_y") +
+        theme_dark() +
+        coord_flip()
+
+
+      ggplotly(plt, tooltip = "text")
+    })
+    ################
+    # Area Plot
+    ################
+    output$areaPlot <- renderPlotly({
+      form <- as.formula(paste0("~", input$aoi))
+      plt <- ggplot(data = combined(),
+                    aes(x = !!sym(input$region),
+                        y = !!sym(input$area),
+                        colour = !!sym(input$plate),
+                        text = paste0("Sample ID: ", !!sym(input$mergeVar), "\n", # nolint: line_length_linter.
+                                      "Raw: ", !!sym(input$raw), "\n",
+                                      "Plate: ", !!sym(input$plate), "\n",
+                                      "AOI: ", !!sym(input$aoi), "\n",
+                                      "Region: ", !!sym(input$region)))) +
+        geom_point() +
+        #geom_line() +
+        facet_wrap(form, scales = "free_y") +
+        theme_dark() +
+        coord_flip()
+
+
+    ggplotly(plt, tooltip = "text")
+    })
+
+
+  #####################
+  # Nuclei Plot
+  #####################
+  output$nucleiPlot <- renderPlotly({
+    form <- as.formula(paste0("~", input$aoi))
+    plt <- ggplot(data = combined(),
+                  aes(x = !!sym(input$region),
+                      y = !!sym(input$nuclei),
+                      colour = !!sym(input$plate),
+                      text = paste0("Sample ID: ", !!sym(input$mergeVar), "\n", # nolint: line_length_linter.
+                                    "Raw: ", !!sym(input$raw), "\n",
+                                    "Plate: ", !!sym(input$plate), "\n",
+                                    "AOI: ", !!sym(input$aoi), "\n",
+                                    "Region: ", !!sym(input$region)))) +
+      geom_point() +
+      #geom_line() +
+      facet_wrap(form, scales = "free_y") +
+      theme_dark() +
+      coord_flip()
+
+
+    ggplotly(plt, tooltip = "text")
   })
+})
+
+  ## Centered Log-Ratio
+  #output$clrPlot <- renderPlotly({
+    #dat <- copy(combined())
+
+    #dat[, clr := log(.SD) - sum(log(.SD)) / .N,
+    #    .SDCols = input$raw, by = input$plate]
+    #print(dat$clr)
+
+    #rawHeat <- ggplot(receivedNovaCLRRerun ,
+    #                  aes(x= WellC, y=WellR, fill=CLR, text=text)) +
+    #  geom_tile() +
+    #  facet_wrap(~Plate, ncol = 3) +
+   #   ggtitle("Centered log-ratio of raw reads by plate.", subtitle = "Heatmap")
+
+
+   # ggplotly(rawHeat, tooltip = "text")
+
+
+
+
+#})
 
 }

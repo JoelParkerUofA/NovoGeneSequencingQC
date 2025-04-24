@@ -48,6 +48,10 @@ ui_dashboard <- nav_panel(
                             choices = "Nuclei")),
       column(3, selectInput("area", "Select Tissue Area Variable",
                             choices = "area")),
+      column(3, selectInput("wellRow", "Well Row",
+                            choices = "WellR")),
+      column(3, selectInput("wellCol", "Well Column",
+                            choices = "wellC")),
       column(3, actionButton("createReport", "Generate Report"))
 
     ), fill = FALSE
